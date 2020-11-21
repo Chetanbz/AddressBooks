@@ -6,7 +6,7 @@ public class Contact {
 	private String city;
 	private String State;
 	private int zip;
-	private int mobile;
+	private long mobile;
 	private String email;
 	
 	
@@ -50,10 +50,10 @@ public class Contact {
 	public void setZip(int zip) {
 		this.zip = zip;
 	}
-	public int getMobile() {
+	public long getMobile() {
 		return mobile;
 	}
-	public void setMobile(int mobile) {
+	public void setMobile(long mobile) {
 		this.mobile = mobile;
 	}
 	public String getEmail() {
@@ -62,7 +62,7 @@ public class Contact {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String toString() {
+	public String toString() {  // This way Entry will be printed 
 		return  "#" + first + " " + last + " " + address + " " + city + " " + State + " " + zip+ " " + mobile + " " + email; 
 	}
 
