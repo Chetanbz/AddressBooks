@@ -65,5 +65,6 @@ public class Contact {
 	public String toString() {  // This way Entry will be printed 
 		return  "#" + first + " " + last + " " + address + " " + city + " " + State + " " + zip+ " " + mobile + " " + email; 
 	}
+	
 
 }
