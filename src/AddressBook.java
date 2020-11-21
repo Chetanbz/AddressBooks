@@ -6,7 +6,7 @@ public class AddressBook {
 		Scanner sc = new Scanner(System.in);
 		System.out.println(" Please mention details of person in order");
 
-		
+		outer:
 		while(true) {
 			Contact en = new Contact();      // Contact class is created which has details of person which needed to upload, Here just object created
 			System.out.println(" First name");
@@ -28,18 +28,18 @@ public class AddressBook {
 		
 			// Edit entry step
 			System.out.println(" Do you want to edit existing person detail");
-			System.out.println(" Press 0 to not edit, Press 1 to edit");
+			System.out.println(" Press 0 to not edit, Press 1 to delete");
 			int num = sc.nextInt();
 			if (num ==0) {   /// If 0 -- Edit is not required
 				break;
 			}
 			else if (num == 1) {   /// If 1 -- Edit is required check for first name
 				while(true) {
-					System.out.println(" Mention First name of person whose entry want to edit");
+					System.out.println(" Mention First name of person whose entry want to Delete");
 					String personName = sc.next();
 					if (en.getFirst().equals(personName)) {
 						en = null ;    /// assigning object to null will delete person entry
-					    break;
+					    break outer;
 					}
 					else {
 						System.out.println(" Name not found in addressbook ");
