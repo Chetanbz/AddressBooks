@@ -6,6 +6,7 @@ public class AddressBook {
 	
 	static List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
 	// addEntry() class will add all entry to addressbook
+	static int count = 0;
 	public static void main(String[] args) {
 		System.out.println(" Welcome to Address Book");
 		Scanner sc = new Scanner(System.in);
@@ -91,8 +92,9 @@ public class AddressBook {
 		}
 	}
 	public String toString() {
-		//display();
-		return   "Addressbook ";
+		count++;
+		display();
+		return   "Addressbook " + count;
 	}
 
 }
