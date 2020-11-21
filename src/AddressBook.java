@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// look another class AddressbookList which contains all addressbooks
 public class AddressBook {
 	
 	static List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
