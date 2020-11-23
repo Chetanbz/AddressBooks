@@ -63,7 +63,7 @@ public class Contact {
 		this.email = email;
 	}
 	public String toString() {  // This way Entry will be printed 
-		return  "#" + first + " " + last + " " + address + " " + city + " " + State + " " + zip+ " " + mobile + " " + email; 
+		return  "#" +" First Name :" +  first + " Last Name :" + last + " \n" + "Address :" +  address + " City :" + city + " State :" + State + " Zip :" + zip+ " Mobile :" + mobile + " Email :" + email; 
 	}
 	
 

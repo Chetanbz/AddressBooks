@@ -90,12 +90,11 @@ public class AddressBook {
 	public static void display() {
 		for(Object Obj :personList) {
 			System.out.println(Obj);
+			System.out.println();
 		}
 	}
-	public String toString() {
-		count++;
+	public void print() {
 		display();
-		return   "Addressbook " + count;
 	}
 
 }
