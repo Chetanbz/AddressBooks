@@ -5,10 +5,11 @@ import java.util.Scanner;
 // look another class AddressbookList which contains all addressbooks
 public class AddressBook {
 	
-	static List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
-	// addEntry() class will add all entry to addressbook
 	static int count = 0;
 	public static void main(String[] args) {
+		List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
+		// addEntry() class will add all entry to addressbook
+		AddressBook addressbook = new AddressBook();
 		System.out.println(" Welcome to Address Book");
 		Scanner sc = new Scanner(System.in);
 		while(true) {
@@ -25,7 +26,7 @@ public class AddressBook {
 			else if(num == 2) {  /// If 2 is person details are  intended to edit
 				System.out.println(" Please mention first name of person");
 				String name = sc.next();
-				if (findEntry(name)) { // When we invoke finEntry() we delete that object from list with first name
+				if (findEntry(name,personList)) { // When we invoke finEntry() we delete that object from list with first name
 					System.out.println(" Please edit details of person in order");
 					personList.add(addEntry());    // addEntry call agains and again entry got added
 				}
@@ -36,7 +37,7 @@ public class AddressBook {
 			else if (num == 3){  /// If 3 is person details are  intended to delete
 				System.out.println(" Please mention first name of person");
 				String name = sc.next();
-				if (findEntry(name)) {
+				if (findEntry(name,personList)) {
 					System.out.println(" Entry of person ");
 				}
 				else {
@@ -44,7 +45,7 @@ public class AddressBook {
 				}
 			}
 			else if(num ==4) {
-				display();
+				addressbook.display(personList);
 			}
 			else {
 				System.out.println("Invalid entry");
@@ -76,7 +77,7 @@ public class AddressBook {
 		return en;
 	}
 	
-	public static boolean findEntry(String name) {
+	public static boolean findEntry(String name, List<Contact> personList) {
 		for(Object Obj :personList) {
 			String FirstName = ((Contact) Obj).getFirst();
 			if(FirstName.equals(name)) {
@@ -87,14 +88,11 @@ public class AddressBook {
 		return false;
 	}
 	
-	public static void display() {
+	public  void display( List<Contact> personList) {
 		for(Object Obj :personList) {
 			System.out.println(Obj);
 			System.out.println();
 		}
-	}
-	public void print() {
-		display();
 	}
 
 }
