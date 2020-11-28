@@ -68,27 +68,33 @@ public class AddressBookList {
 		Map<String,String> cityList = addressBook.cityList;
 		Map<String,String> stateList = addressBook.stateList;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Press 1 Search person in city \n Press 2 Search person in State ");
+		System.out.println(" Press 1 Search person in city \n Press 2 Search person in State ");
 		int num = sc.nextInt();
 		if (num ==1) {
+			int count = 0;
 			System.out.println(" City Name ");
 			String cityName = sc.next();
 			for (Map.Entry<String,String> entry : cityList.entrySet()) {
 				if(entry.getValue().equals(cityName)) {
 					names.add(entry.getKey());
 					System.out.println(entry.getKey());
+					count++;
 				}
 			}
+			System.out.println("Total person in  " + cityName + " "+ count ); 
 		}
 		else if (num ==2) {
+			int count1 = 0;
 			System.out.println(" State Name ");
 			String stateName = sc.next();
 			for (Map.Entry<String,String> entry : stateList.entrySet()) {
 				if(entry.getValue().equals(stateName)) {
 					names.add(entry.getKey());
 					System.out.println(entry.getKey());
+					count1++;
 				}
 			}
+			System.out.println("Total person in  " + stateName + " "+ count1 );
 		}
 		return names;
 	}
