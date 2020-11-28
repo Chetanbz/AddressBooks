@@ -1,11 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 // look another class AddressbookList which contains all addressbooks
 public class AddressBook {
 	
 	static int count = 0;
+	static Map<String,String> cityList = new HashMap<String,String> ();
+	static Map<String,String> stateList = new HashMap<String,String> ();
+	
 	public static void main(String[] args) {
 		List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
 		// addEntry() class will add all entry to addressbook
@@ -28,7 +33,9 @@ public class AddressBook {
 				String name = sc.next();
 				if (findEntry(name,personList)) { // When we invoke finEntry() we delete that object from list with first name
 					System.out.println(" Please edit details of person in order");
-					personList.add(addEntry());    // addEntry call agains and again entry got added
+					personList = obtainContact(name,personList);
+					System.out.println("Executed ");
+					
 				}
 				else {
 					System.out.println(" Can not find the given entry");
@@ -74,6 +81,8 @@ public class AddressBook {
 		en.setMobile(sc.nextLong());   /// Set Mobile input taken from console
 		System.out.println(" Email");
 		en.setEmail(sc.next());   /// Set Email input taken from console
+		cityList.put(en.getFirst(), en.getCity());
+		stateList.put(en.getFirst(), en.getState());
 		return en;
 	}
 	
@@ -88,11 +97,63 @@ public class AddressBook {
 		return false;
 	}
 	
+	public static List<Contact> obtainContact(String name, List<Contact> personList) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println(" Out loop");
+		for(Contact Obj :personList) {
+			System.out.println("in loop ");
+			Contact c =(Contact) Obj;
+			String FirstName = c.getFirst();
+			if(FirstName.equals(name)) {
+				System.out.println("What yo want to edit ");
+				System.out.println("Press 1 Address \n Press City \n Press 3 State ");
+				int num = sc.nextInt();
+				if (num ==1) {
+					System.out.println(" Mention Updated Address ");
+					c.setAddress(sc.next());
+				}
+				else if (num ==2) {
+					System.out.println(" Mention City ");
+					c.setCity(sc.next());
+				}
+				else if (num ==3) {
+					System.out.println(" Mention State ");
+					c.setState(sc.next());
+				}
+			}
+			else {
+				System.out.println(" Not Found");
+			}
+		}
+		return personList;
+	}
+	
+	
 	public  void display( List<Contact> personList) {
 		for(Object Obj :personList) {
 			System.out.println(Obj);
 			System.out.println();
 		}
 	}
+	public static Contact editEntry(Contact c) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("What yo want to edit ");
+		System.out.println("Press 1 Address \n Press City \n Press 3 State ");
+		int num = sc.nextInt();
+		if (num ==1) {
+			System.out.println(" Mention Updated Address ");
+			c.setAddress(sc.next());
+		}
+		else if (num ==2) {
+			System.out.println(" Mention City ");
+			c.setCity(sc.next());
+		}
+		else if (num ==3) {
+			System.out.println(" Mention State ");
+			c.setState(sc.next());
+		}
+		return c;
+	}
+	
 
 }
