@@ -10,36 +10,49 @@ public class AddressBookList {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			System.out.println(" Do you wish to add addressbook");
-			System.out.println(" Press 1 Add new Addressbook\n Press 2 Display Addressbooks\n Press 3 Existing Addressbooks \n Press 0 Exit ");
+			System.out.println("Press 1 New Addressbook\nPress 2 Go to Existing Addressbooks\nPress 3 Delete Existing Addressbooks \nPress 4 Display all addressbooks \nPress 0 Exit ");
 			int num = sc.nextInt();
-			AddressBook addressBook = new AddressBook();
 			if (num ==0) {
-				addressBook = null;
 				break;
 			}
 			else if(num==1) {
 				System.out.println(" Unique name of addressbook");
 				String name = sc.next();
 				if (findUniqueName( name)) {
+					AddressBook addressBook = new AddressBook();
 					System.out.println(" Give details of addressbook");
-					addressBook.main(null);
+					addressBook.addressbookOperation();
 					addressBookList.put(name,addressBook);
+					
 				}
+			}
+			else if(num ==2) {
+				System.out.println("Name of addressbook");
+				String name = sc.next();
+				AddressBook addressBookExist = addressBookList.get(name);
+				addressBookExist.addressbookOperation();
 			}
 			else if(num ==3) {
 				System.out.println("Name of addressbook");
 				String name = sc.next();
-				AddressBook addressBookExist = addressBookList.get(name);
-				addressBookExist.main(null);
+				addressBookList.remove(name);
 			}
-			else {
-				display();
+			else if(num ==4) {
+				for (Map.Entry<String,AddressBook> entry : addressBookList.entrySet())  {
+					String nameAddressbook = entry.getKey();
+					System.out.println(nameAddressbook);   
+					AddressBook addressBookExist = addressBookList.get(nameAddressbook);
+					for(Object Obj :addressBookExist.personList) {
+						System.out.println(Obj);
+						System.out.println();
+					}
 			}
+			
 			
 		}
 		//System.out.println(addressBookList);
-		sc.close();
-
+		
+	}
 	}
 	public static boolean findUniqueName(String name) {
 		for ( String key : addressBookList.keySet() ) {
@@ -50,9 +63,6 @@ public class AddressBookList {
 		}
 		return true;
 	}
-	public static void display() {
-		for ( String key : addressBookList.keySet() ) {
-			 System.out.println( "Address book "+ key );
-		}
-	}
+
+	
 }

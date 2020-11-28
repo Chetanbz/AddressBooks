@@ -1,14 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-// look another class AddressbookList which contains all addressbooks
+
 public class AddressBook {
 	
-	static int count = 0;
+	 List<Contact> personList = new ArrayList<Contact>();     
 	public static void main(String[] args) {
-		List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
-		// addEntry() class will add all entry to addressbook
+		addressbookOperation();
+		
+	}
+	public static void addressbookOperation() {
 		AddressBook addressbook = new AddressBook();
 		System.out.println(" Welcome to Address Book");
 		Scanner sc = new Scanner(System.in);
@@ -21,14 +24,14 @@ public class AddressBook {
 			}
 			else if(num == 1) {  /// If 1 is person details are  intended to add
 				System.out.println(" Please mention details of person in order");
-				personList.add(addEntry());
+				addressbook.personList.add(addEntry());
 			}
 			else if(num == 2) {  /// If 2 is person details are  intended to edit
 				System.out.println(" Please mention first name of person");
 				String name = sc.next();
-				if (findEntry(name,personList)) { // When we invoke finEntry() we delete that object from list with first name
+				if (findEntry(name,addressbook.personList)) { // When we invoke finEntry() we delete that object from list with first name
 					System.out.println(" Please edit details of person in order");
-					personList.add(addEntry());    // addEntry call agains and again entry got added
+					addressbook.personList.add(addEntry());    // addEntry call agains and again entry got added
 				}
 				else {
 					System.out.println(" Can not find the given entry");
@@ -37,7 +40,7 @@ public class AddressBook {
 			else if (num == 3){  /// If 3 is person details are  intended to delete
 				System.out.println(" Please mention first name of person");
 				String name = sc.next();
-				if (findEntry(name,personList)) {
+				if (findEntry(name,addressbook.personList)) {
 					System.out.println(" Entry of person ");
 				}
 				else {
@@ -45,14 +48,16 @@ public class AddressBook {
 				}
 			}
 			else if(num ==4) {
-				addressbook.display(personList);
+				for(Object Obj :addressbook.personList) {
+					System.out.println(Obj);
+					System.out.println();
+				}
 			}
 			else {
 				System.out.println("Invalid entry");
 			}
-			
 		}
-		
+		System.out.println(addressbook);
 	}
 	
 	public static Contact addEntry() {  // addEntry will add all entry to class
@@ -87,12 +92,22 @@ public class AddressBook {
 		}
 		return false;
 	}
-	
-	public  void display( List<Contact> personList) {
-		for(Object Obj :personList) {
-			System.out.println(Obj);
-			System.out.println();
+	public String display() {
+		AddressBook addressbook = new AddressBook();
+		String str = "";
+		for(Object Obj :addressbook.personList) {
+			str += Obj;
 		}
+		return str;
 	}
+	public String toString() {
+		AddressBook addressbook = new AddressBook();
+		String str = "";
+		for(Object Obj :addressbook.personList) {
+			str += (String)Obj;
+		}
+		return str;
+	}
+
 
 }

@@ -8,11 +8,12 @@ public class Contact {
 	private int zip;
 	private long mobile;
 	private String email;
+	static int count;
 	
 	
 	
 	public Contact() {
-		// TODO Auto-generated constructor stub
+		count++;
 	}
 	public String getFirst() {
 		return first;
@@ -63,7 +64,7 @@ public class Contact {
 		this.email = email;
 	}
 	public String toString() {  // This way Entry will be printed 
-		return  "#" +" First Name :" +  first + " Last Name :" + last + " \n" + "Address :" +  address + " City :" + city + " State :" + State + " Zip :" + zip+ " Mobile :" + mobile + " Email :" + email; 
+		return  " First Name :" +  first + " || Last Name :" + last + " \n" + "Address :" +  address + " ||City :" + city + " || State :" + State + " || Zip :" + zip+ " || Mobile :" + mobile + " || Email :" + email; 
 	}
 	
 
