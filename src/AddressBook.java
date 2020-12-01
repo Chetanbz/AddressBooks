@@ -10,7 +10,7 @@ public class AddressBook {
 	static int count = 0;
 	static Map<String,String> cityList = new HashMap<String,String> ();
 	static Map<String,String> stateList = new HashMap<String,String> ();
-	
+	static List<Contact> contactList = new ArrayList<Contact>();
 	public static void main(String[] args) {
 		List<Contact> personList = new ArrayList<Contact>();      // PersonList can be added with Contacts  
 		// addEntry() class will add all entry to addressbook
@@ -83,6 +83,7 @@ public class AddressBook {
 		en.setEmail(sc.next());   /// Set Email input taken from console
 		cityList.put(en.getFirst(), en.getCity());
 		stateList.put(en.getFirst(), en.getState());
+		contactList.add(en);
 		return en;
 	}
 	
