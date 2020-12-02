@@ -131,9 +131,34 @@ public class AddressBook {
 	}
 
 	public static void sortList(List<Contact> personList){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Sort contact list based on below options");
+		System.out.println(" Press 1 ---First Name \n Press 2 ---State \n Press 3 ---City \n Press 4 Zip ");
 		Consumer<Contact> myListAction = n->{ System.out.println(n); };
-		List<Contact> myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst))
-				.collect(Collectors.toList());
+		List<Contact> myList = null;
+		int num = sc.nextInt();
+		switch(num) {
+			case (1): {
+				myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst))
+						.collect(Collectors.toList());
+				break;
+			}
+			case (2): {
+				myList = personList.stream().sorted(Comparator.comparing(Contact::getState))
+						.collect(Collectors.toList());
+				break;
+			}
+			case (3): {
+				myList = personList.stream().sorted(Comparator.comparing(Contact::getCity))
+						.collect(Collectors.toList());
+				break;
+			}
+			case (4): {
+				myList = personList.stream().sorted(Comparator.comparing(Contact::getZip))
+						.collect(Collectors.toList());
+				break;
+			}
+		}
 		myList.forEach(myListAction);
 	}
 	
