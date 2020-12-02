@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 // look another class AddressbookList which contains all addressbooks
 public class AddressBook {
@@ -19,7 +17,7 @@ public class AddressBook {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			System.out.println(" What you wish to do");
-			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 0 ---Exit ");
+			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 5 Sort \n Press 0 ---Exit ");
 			int num = sc.nextInt();
 			if (num == 0) { /// If 0 option from exit 
 				break;   
@@ -53,6 +51,9 @@ public class AddressBook {
 			}
 			else if(num ==4) {
 				addressbook.display(personList);
+			}
+			else if(num ==5) {
+				sortList(personList);
 			}
 			else {
 				System.out.println("Invalid entry");
@@ -127,6 +128,13 @@ public class AddressBook {
 			}
 		}
 		return personList;
+	}
+
+	public static void sortList(List<Contact> personList){
+		Consumer<Contact> myListAction = n->{ System.out.println(n); };
+		List<Contact> myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst))
+				.collect(Collectors.toList());
+		myList.forEach(myListAction);
 	}
 	
 	
