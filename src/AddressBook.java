@@ -1,10 +1,18 @@
-import java.util.*;
-import java.util.function.Consumer;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 // look another class AddressbookList which contains all addressbooks
 public class AddressBook {
-	
+	public static String directory = "D:\\eclipse-java-2020-09-R-win32-x86_64\\Workspace Eclipse\\AddressBooks\\AddressBookDetails\\Entry_Object.txt";
+
 	static int count = 0;
 	static Map<String,String> cityList = new HashMap<String,String> ();
 	static Map<String,String> stateList = new HashMap<String,String> ();
@@ -17,7 +25,7 @@ public class AddressBook {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			System.out.println(" What you wish to do");
-			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 5 Sort \n Press 0 ---Exit ");
+			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 5 ---Store data in file \n Press 0 ---Exit ");
 			int num = sc.nextInt();
 			if (num == 0) { /// If 0 option from exit 
 				break;   
@@ -52,8 +60,8 @@ public class AddressBook {
 			else if(num ==4) {
 				addressbook.display(personList);
 			}
-			else if(num ==5) {
-				sortList(personList);
+			else if (num ==5){
+				writeDetailsInFile();
 			}
 			else {
 				System.out.println("Invalid entry");
@@ -61,6 +69,20 @@ public class AddressBook {
 			
 		}
 		
+	}
+	public static void writeDetailsInFile(){
+		StringBuffer addressBookBuffer = new StringBuffer();
+		contactList.forEach(contact -> {
+			String str = contact.toString().concat("\n").concat("\n");
+			addressBookBuffer.append(str);
+			try{
+				Files.write(Paths.get(directory),addressBookBuffer.toString().getBytes());
+			}catch (IOException e) {
+				System.out.print(e.getMessage() + "Error comes");
+			}
+		});
+
+
 	}
 	
 	public static Contact addEntry() {  // addEntry will add all entry to class
@@ -70,8 +92,9 @@ public class AddressBook {
 		en.setFirst(sc.next());   /// Set first name input taken from console
 		System.out.println(" Last name");
 		en.setLast(sc.next());   /// Set Last name input taken from console
+		en.setAddress(sc.nextLine());
 		System.out.println(" Address");
-		en.setAddress(sc.next());   /// Set Address input taken from console
+		en.setAddress(sc.nextLine());   /// Set Address input taken from console
 		System.out.println(" City");
 		en.setCity(sc.next());   /// Set City input taken from console
 		System.out.println(" State");
@@ -129,38 +152,6 @@ public class AddressBook {
 		}
 		return personList;
 	}
-
-	public static void sortList(List<Contact> personList){
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Sort contact list based on below options");
-		System.out.println(" Press 1 ---First Name \n Press 2 ---State \n Press 3 ---City \n Press 4 Zip ");
-		Consumer<Contact> myListAction = n->{ System.out.println(n); };
-		List<Contact> myList = null;
-		int num = sc.nextInt();
-		switch(num) {
-			case (1): {
-				myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst))
-						.collect(Collectors.toList());
-				break;
-			}
-			case (2): {
-				myList = personList.stream().sorted(Comparator.comparing(Contact::getState))
-						.collect(Collectors.toList());
-				break;
-			}
-			case (3): {
-				myList = personList.stream().sorted(Comparator.comparing(Contact::getCity))
-						.collect(Collectors.toList());
-				break;
-			}
-			case (4): {
-				myList = personList.stream().sorted(Comparator.comparing(Contact::getZip))
-						.collect(Collectors.toList());
-				break;
-			}
-		}
-		myList.forEach(myListAction);
-	}
 	
 	
 	public  void display( List<Contact> personList) {
@@ -188,6 +179,10 @@ public class AddressBook {
 		}
 		return c;
 	}
+	/*
+	public List<Contact> sortEntry(List<String> personList){
+		 List<Contact> myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst)).collect(Collectors.toList());
+	}*/
 	
 
 }
