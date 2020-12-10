@@ -1,9 +1,11 @@
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -15,6 +17,8 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 public class AddressBook {
 	public static String directory = "D:\\eclipse-java-2020-09-R-win32-x86_64\\Week3,Workspace Eclipse\\AddressBookExtension\\src\\main\\AddressBookDetails\\Entry_Object.txt";
 	public static String csvDirectory = "D:\\eclipse-java-2020-09-R-win32-x86_64\\Week3,Workspace Eclipse\\AddressBookExtension\\src\\main\\AddressBookDetails\\Entry_Object.csv";
+	public static String gsonDirectory = "D:\\eclipse-java-2020-09-R-win32-x86_64\\Week3,Workspace Eclipse\\AddressBookExtension\\src\\main\\AddressBookDetails\\Entry_Object.jason";
+
 	static int count = 0;
 	static Map<String,String> cityList = new HashMap<String,String> ();
 	static Map<String,String> stateList = new HashMap<String,String> ();
@@ -63,13 +67,16 @@ public class AddressBook {
 				addressbook.display(personList);
 			}
 			else if (num ==5){
-				System.out.println(" Press 1 ---Add person to Text file \n Press 2 ---Add person to CSV file");
+				System.out.println(" Press 1 ---Add person to Text file \n Press 2 ---Add person to CSV file \n Press 3 ---Add person to GSon file");
 				int num3 = sc.nextInt();
 				if(num3 == 1) {
 					writeDetailsInFile();
 				}
 				else if(num3 == 2){
 					writeAddresstoCSV();
+				}
+				else{
+					writeAddressToGson();
 				}
 			}
 			else {
@@ -111,6 +118,17 @@ public class AddressBook {
 			e.printStackTrace();
 		}
 
+	}
+	public static void writeAddressToGson() {
+		Gson gson = new Gson();
+		try {
+			String json = gson.toJson(contactList);
+			FileWriter fileWriter = new FileWriter(gsonDirectory);
+			fileWriter.write(json);
+			fileWriter.close();
+		}catch (IOException e){
+			System.out.println("Error Found");
+		}
 	}
 	
 	public static Contact addEntry() {  // addEntry will add all entry to class
