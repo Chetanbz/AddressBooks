@@ -85,6 +85,20 @@ public class AddressBook {
 			else if (num ==6){
 				personList = addressbook.readData();
 				System.out.println(personList.size());
+				System.out.println(" Press 1 To update details \n Press 2 Find PersonBased on City \n Press 0 To exit");
+				int numr = sc.nextInt();
+				if (numr ==1 ){
+					System.out.println("Give name of person");
+					String namer = sc.next();
+					System.out.println("Give Updated Address");
+					String add = sc.next();
+					int numz = addressbook.updateContactStatement(namer,add);
+					System.out.println(numz);
+				}
+				else if(numr == 2){
+					Map<String,String> addressBook = addressbook.getContactByCity();
+					System.out.println(addressBook);
+				}
 			}
 			else {
 				System.out.println("Invalid entry");
@@ -239,6 +253,47 @@ public class AddressBook {
 
 
 
+
+	public List<Contact> readData()  {
+		try {
+			String sql = "select * from addressbooktable";
+			return this.getEmployeePayrollDataUsingDB(sql);
+		}catch (Exception e){
+			System.out.println("Error Occured");
+		}
+		return null;
+	}
+
+	private int updateContactStatement(String name, String address) {
+		String sql = String.format("update addressbooktable set address = '%s' where first_name = '%s'",address,name);
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			return statement.executeUpdate(sql);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return  0;
+	}
+
+	public Map<String, String> getContactByCity() {
+		String sql = String.format("select city, first_name from addressbooktable  group by city");
+		Map<String, String> cityToNameMap = new HashMap<>();
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			while (result.next()) {
+				String city = result.getString("city");
+				String first = result.getString("first_name");
+				cityToNameMap.put(city, first);
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return cityToNameMap;
+	}
+
+
+
 	private List<Contact> getEmployeePayrollDataUsingDB(String sql) {
 		List<Contact> addressBookList= new ArrayList<>();
 		try (Connection connection = this.getConnection()) {
@@ -249,16 +304,6 @@ public class AddressBook {
 			e.printStackTrace();
 		}
 		return addressBookList;
-	}
-
-	public List<Contact> readData()  {
-		try {
-			String sql = "select * from addressbooktable";
-			return this.getEmployeePayrollDataUsingDB(sql);
-		}catch (Exception e){
-			System.out.println("Error Occured");
-		}
-		return null;
 	}
 
 	private List<Contact> getEmployeePayrollData(ResultSet result) {
