@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 import com.google.gson.Gson;
@@ -31,7 +33,7 @@ public class AddressBook {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			System.out.println(" What you wish to do");
-			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 5 ---Store data in file \n Press 0 ---Exit ");
+			System.out.println(" Press 1 ---Add person \n Press 2 ---Edit existing entry \n Press 3 ---Delete existing entry \n Press 4 ---Display Existing entry \n Press 5 ---Store data in file \n Press 6 Result from DB \n Press 0 ---Exit ");
 			int num = sc.nextInt();
 			if (num == 0) { /// If 0 option from exit 
 				break;   
@@ -78,6 +80,11 @@ public class AddressBook {
 				else{
 					writeAddressToGson();
 				}
+			}
+
+			else if (num ==6){
+				personList = addressbook.readData();
+				System.out.println(personList.size());
 			}
 			else {
 				System.out.println("Invalid entry");
@@ -229,6 +236,62 @@ public class AddressBook {
 	public List<Contact> sortEntry(List<String> personList){
 		 List<Contact> myList = personList.stream().sorted(Comparator.comparing(Contact::getFirst)).collect(Collectors.toList());
 	}*/
+
+
+
+	private List<Contact> getEmployeePayrollDataUsingDB(String sql) {
+		List<Contact> addressBookList= new ArrayList<>();
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			addressBookList = this.getEmployeePayrollData(result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return addressBookList;
+	}
+
+	public List<Contact> readData()  {
+		try {
+			String sql = "select * from addressbooktable";
+			return this.getEmployeePayrollDataUsingDB(sql);
+		}catch (Exception e){
+			System.out.println("Error Occured");
+		}
+		return null;
+	}
+
+	private List<Contact> getEmployeePayrollData(ResultSet result) {
+		List<Contact> contactList2 = new ArrayList<>();
+		try{
+			while(result.next()){
+				String first = result.getString("first_name");
+				String last = result.getString("last_name");
+				String address = result.getString("address");
+				String city = result.getString("city");
+				String state = result.getString("state");
+				int zip     = result.getInt("zip");
+				long mobile = result.getLong("phone");
+				String email = result.getString("email");
+				Contact contact = new Contact(first,last,address,city,state,zip,mobile,email);
+				contactList2.add(contact);
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		return contactList2;
+	}
+
+	private Connection getConnection() throws SQLException {
+		String jdbcURL = "jdbc:mysql://localhost:3306/addressbook?useSSL=false";
+		String userName = "root";
+		String password ="Chetansql123";
+		Connection connection;
+		System.out.println("connecting to the database:" + jdbcURL);
+		connection = DriverManager.getConnection(jdbcURL, userName, password);
+		System.out.println("Connection SuccessFul");
+		return connection;
+	}
 	
 
 }

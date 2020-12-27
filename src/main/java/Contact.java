@@ -8,9 +8,19 @@ public class Contact {
 	private int zip;
 	private long mobile;
 	private String email;
-	
-	
-	
+
+
+	public Contact(String first, String last, String address, String city, String state, int zip, long mobile, String email) {
+		this.first = first;
+		this.last = last;
+		this.address = address;
+		this.city = city;
+		State = state;
+		this.zip = zip;
+		this.mobile = mobile;
+		this.email = email;
+	}
+
 	public Contact() {
 		// TODO Auto-generated constructor stub
 	}
