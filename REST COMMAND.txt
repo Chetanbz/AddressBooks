@@ -1,0 +1,22 @@
+View Jason Object on Brower Using Jason Server
+json-server --watch Address.json
+
+
+Get Content on Local Machine Using Curl
+$ curl -X GET -H "Content-Type:application/json" "http://localhost:3000/AddressBook"
+
+Add Content 
+$ curl -X POST -H "Content-Type:application/json" -d'{"id":4,"first":"Ram",
+"last":"Patil","address":"Shree","city":"Bhusals","State":"Maharctsr",
+"zip":4523265,"mobile":56526655,"email":"bjdckdckc"}' 
+"http://localhost:3000/AddressBook"
+
+
+Update for particular ENtry
+$ curl -XPUT -H "Content-Type:application/json" -d'{"id":4,"first":"Joseph",
+"last":"Patil","address":"Shree","city":"Bhusals","State":"Maharctsr",
+"zip":4523265,"mobile":56526655,"email":"bjdckdckc"}' 
+"http://localhost:3000/AddressBook/4"
+
+Delete Entry
+curl -X DELETE -H "Content-Type:application/json" "http://localhost:3000/AddressBook/4"
